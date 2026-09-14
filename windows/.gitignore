@@ -1,5 +1,56 @@
+# ============================
+# FLUTTER / DART
+# ============================
+.dart_tool/
+.packages
+.pub-cache/
+.pub/
+build/
 flutter/ephemeral/
 
+# Generated plugin registrant
+generated_plugin_registrant.dart
+
+# ============================
+# ANDROID
+# ============================
+**/android/**/local.properties
+**/android/**/.gradle/
+**/android/**/build/
+**/android/**/captures/
+**/android/**/.idea/
+**/android/**/.cxx/
+
+# Keystore (ne jamais versionner)
+**/*.jks
+**/*.keystore
+
+# ============================
+# iOS / macOS
+# ============================
+**/ios/Pods/
+**/ios/Flutter/Flutter.framework
+**/ios/Flutter/Flutter.podspec
+**/ios/Flutter/App.framework
+**/ios/Flutter/engine/
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/ephemeral/
+**/ios/Runner/GeneratedPluginRegistrant.*
+**/macos/Flutter/ephemeral/
+**/macos/Flutter/GeneratedPluginRegistrant.*
+
+# Xcode
+**/*.xcworkspace
+**/*.xcuserdata
+**/*.xcuserstate
+**/*.moved-aside
+**/*.pbxuser
+**/*.mode1v3
+**/*.mode2v3
+
+# ============================
+# VISUAL STUDIO / VS CODE
+# ============================
 # Visual Studio user-specific files.
 *.suo
 *.user
@@ -11,7 +62,34 @@ x64/
 x86/
 
 # Visual Studio cache files
-# files ending in .cache can be ignored
 *.[Cc]ache
-# but keep track of directories ending in .cache
 !*.[Cc]ache/
+
+# VS Code
+.vscode/
+.vscode-shared/
+
+# ============================
+# WINDOWS / SYSTEM
+# ============================
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ============================
+# LOGS / TEMP
+# ============================
+*.log
+*.tmp
+*.temp
+
+# ============================
+# OTHER COMMON ARTIFACTS
+# ============================
+*.iml
+*.ipr
+*.iws
+.idea/
+*.lock
+*.DS_Store
+

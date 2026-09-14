@@ -460,6 +460,20 @@ class FreeboxPlayerClient {
   }
 
   //==========================================================
+  // Desktop
+  //==========================================================
+
+  // Future<void> sendDesktop(int usage) async {
+  //   final report = Uint8List(2);
+
+  //   final data = ByteData.sublistView(report);
+
+  //   data.setUint16(0, usage, Endian.little);
+
+  //   await _sendData(_hidReportDesktop, report);
+  // }
+
+  //==========================================================
   // Consumer
   //==========================================================
 

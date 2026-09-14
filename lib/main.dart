@@ -163,22 +163,25 @@ class _RemoteHomePageState extends State<RemoteHomePage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildStatusCard(),
-          const SizedBox(height: 26),
-          _buildSectionTitle('Contrôle rapide', 'Les commandes essentielles, toujours à portée de main.'),
-          const SizedBox(height: 14),
-          _buildTransportControls(),
-          const SizedBox(height: 26),
-          _buildSectionTitle('Navigation', 'Naviguez dans vos contenus avec précision.'),
+          
+          // const SizedBox(height: 26),
+          // _buildSectionTitle('Navigation', 'Naviguez dans vos contenus avec précision.'),
           const SizedBox(height: 14),
           _buildDirectionPad(),
-          _buildSectionTitle(
-            'Clavier numérique',
-            'Envoyez directement les touches 0 à 9 au Player.',
-          ),
+          // _buildSectionTitle(
+          //   'Clavier numérique',
+          //   'Envoyez directement les touches 0 à 9 au Player.',
+          // ),
           const SizedBox(height: 14),
           _buildNumericKeyboard(),
+
           const SizedBox(height: 26),
           _buildVolumeControl(),
+
+          // const SizedBox(height: 26),
+          // _buildSectionTitle('Contrôle rapide', 'Les commandes essentielles, toujours à portée de main.'),
+          const SizedBox(height: 14),
+          _buildTransportControls(),
         ],
       ),
     );
@@ -231,18 +234,110 @@ class _RemoteHomePageState extends State<RemoteHomePage> {
   }
 
   Widget _buildTransportControls() {
-    return Row(
-      children: [
-        Expanded(child: _actionButton(Icons.power_settings_new_rounded, 'Power', const Color(0xFFFF6D7A), () => _playerClient.sendConsumer(0x30))),
-        const SizedBox(width: 10),
-        Expanded(child: _actionButton(Icons.replay_10_rounded, 'Retour', const Color(0xFF8EAEFF), () => _playerClient.sendConsumer(0x204))),
-        const SizedBox(width: 10),
-        Expanded(child: _actionButton(Icons.pause_rounded, 'Pause', const Color(0xFF8EAEFF), () => _playerClient.sendConsumer(0xCD))),
-        const SizedBox(width: 10),
-        Expanded(child: _actionButton(Icons.forward_10_rounded, 'Avance', const Color(0xFF8EAEFF), () => _playerClient.sendConsumer(0xB3))),
-      ],
-    );
-  }
+  return Column(
+    children: [
+      Row(
+        children: [
+          Expanded(
+            child: _actionButton(
+              Icons.power_settings_new_rounded,
+              'Power',
+              const Color(0xFFFF6D7A),
+              () => _playerClient.sendConsumer(0x30),
+            ),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: _actionButton(
+              Icons.home_rounded,
+              'Free',
+              const Color(0xFF8EAEFF),
+              () => _playerClient.sendConsumer(0x18F),
+            ),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: _actionButton(
+              Icons.search_rounded,
+              'Recherche',
+              const Color(0xFF8EAEFF),
+              () => _playerClient.sendConsumer(0x221),
+            ),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: _actionButton(
+              Icons.menu_rounded,
+              'Menu',
+              const Color(0xFF8EAEFF),
+              () => _playerClient.sendConsumer(0x40),
+            ),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: _actionButton(
+              Icons.fiber_manual_record_rounded,
+              'Enregistrer',
+              const Color(0xFFFF6D7A),
+              () => _playerClient.sendConsumer(0xB2),
+            ),
+          ),
+        ],
+      ),
+
+      const SizedBox(height: 10),
+
+      Row(
+        children: [
+          Expanded(
+            child: _actionButton(
+              Icons.replay_10_rounded,
+              'Retour',
+              const Color(0xFF8EAEFF),
+              () => _playerClient.sendConsumer(0x204),
+            ),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: _actionButton(
+              Icons.pause_rounded,
+              'Pause',
+              const Color(0xFF8EAEFF),
+              () => _playerClient.sendConsumer(0xCD),
+            ),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: _actionButton(
+              Icons.forward_10_rounded,
+              'Avance',
+              const Color(0xFF8EAEFF),
+              () => _playerClient.sendConsumer(0xB3),
+            ),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: _actionButton(
+              Icons.keyboard_arrow_up_rounded,
+              'Prog +',
+              const Color(0xFF8EAEFF),
+              () => _playerClient.sendConsumer(0x9C),
+            ),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: _actionButton(
+              Icons.keyboard_arrow_down_rounded,
+              'Prog -',
+              const Color(0xFF8EAEFF),
+              () => _playerClient.sendConsumer(0x9D),
+            ),
+          ),
+        ],
+      ),
+    ],
+  );
+}
 
   Widget _actionButton(IconData icon, String label, Color color, Future<void> Function() command) {
     return InkWell(
@@ -379,18 +474,28 @@ class _RemoteHomePageState extends State<RemoteHomePage> {
   }
 
   Widget _buildVolumeControl() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 13),
-      decoration: BoxDecoration(color: const Color(0xFF121722), borderRadius: BorderRadius.circular(16)),
-      child: Row(
-        children: [
-          IconButton(tooltip: 'Muet', onPressed: () => _sendCommand('Muet', () async { setState(() => _isMuted = !_isMuted); await _playerClient.sendConsumer(0xE2); }), icon: Icon(_isMuted ? Icons.volume_off_rounded : Icons.volume_up_rounded, color: const Color(0xFFB6C6F4))),
-          Expanded(child: Slider(value: _volume.toDouble(), max: 100, onChanged: (value) => setState(() { _volume = value.round(); _isMuted = false; }), onChangeEnd: (_) => _sendCommand('Volume', () => _playerClient.sendConsumer(0xE9)))),
-          SizedBox(width: 34, child: Text('$_volume', textAlign: TextAlign.right, style: const TextStyle(fontWeight: FontWeight.w700))),
-        ],
+  return Row(
+    children: [
+      Expanded(
+        child: _actionButton(
+          Icons.volume_down_rounded,
+          'Volume -',
+          const Color(0xFF8EAEFF),
+          () => _playerClient.sendConsumer(0xEA),
+        ),
       ),
-    );
-  }
+      const SizedBox(width: 10),
+      Expanded(
+        child: _actionButton(
+          Icons.volume_up_rounded,
+          'Volume +',
+          const Color(0xFF8EAEFF),
+          () => _playerClient.sendConsumer(0xE9),
+        ),
+      ),
+    ],
+  );
+}
 
   Widget _buildPlaceholder() {
     final title = _selectedTab == 1 ? 'Applications' : 'Réglages';
@@ -410,4 +515,5 @@ class _RemoteHomePageState extends State<RemoteHomePage> {
       ],
     );
   }
+
 }
