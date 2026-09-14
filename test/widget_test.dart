@@ -13,7 +13,7 @@ void main() {
   testWidgets('affiche la télécommande principale', (WidgetTester tester) async {
     await tester.pumpWidget(const FreeboxRemoteApp());
 
-    expect(find.text('Freebox Remote'), findsOneWidget);
+    expect(find.text('TélécommandeqFreebox'), findsOneWidget);
     expect(find.textContaining('Freebox Delta'), findsOneWidget);
     expect(find.text('Navigation'), findsOneWidget);
   });

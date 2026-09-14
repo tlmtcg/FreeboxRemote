@@ -11,7 +11,7 @@ class FreeboxRemoteApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Freebox Remote',
+      title: 'Télécommande Freebox',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         brightness: Brightness.dark,
@@ -56,8 +56,8 @@ class _RemoteHomePageState extends State<RemoteHomePage> {
       _connectionMessage = 'Recherche du Player Delta sur le réseau local...';
     });
     try {
-      // final player = await _playerClient.discover();
-      final player = await _playerClient.discoverManual();
+      final player = await _playerClient.discover();
+      // final player = await _playerClient.discoverManual();
       if (player == null) throw StateError('Player introuvable');
       await _playerClient.connect(player);
       if (!mounted) return;
@@ -138,7 +138,7 @@ class _RemoteHomePageState extends State<RemoteHomePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Freebox Remote', style: TextStyle(fontSize: 19, fontWeight: FontWeight.w700)),
+                Text('Télécommande Freebox', style: TextStyle(fontSize: 19, fontWeight: FontWeight.w700)),
                 Text('Salon · Freebox Delta', style: TextStyle(color: Color(0xFF8E96A8), fontSize: 12)),
               ],
             ),
@@ -171,6 +171,12 @@ class _RemoteHomePageState extends State<RemoteHomePage> {
           _buildSectionTitle('Navigation', 'Naviguez dans vos contenus avec précision.'),
           const SizedBox(height: 14),
           _buildDirectionPad(),
+          _buildSectionTitle(
+            'Clavier numérique',
+            'Envoyez directement les touches 0 à 9 au Player.',
+          ),
+          const SizedBox(height: 14),
+          _buildNumericKeyboard(),
           const SizedBox(height: 26),
           _buildVolumeControl(),
         ],
@@ -276,6 +282,100 @@ class _RemoteHomePageState extends State<RemoteHomePage> {
   Widget _padButton(IconData icon, Alignment alignment, String label) {
     final keys = {'Haut': 0x52, 'Bas': 0x51, 'Gauche': 0x50, 'Droite': 0x4F};
     return Align(alignment: alignment, child: IconButton(tooltip: label, onPressed: () => _sendCommand(label, () => _playerClient.sendKeyboard(keys[label]!)), icon: Icon(icon, size: 36, color: const Color(0xFFDDE5FF))));
+  }
+
+  Widget _buildNumericKeyboard() {
+  const keys = {
+    '0': 0x62,
+    '1': 0x59,
+    '2': 0x5A,
+    '3': 0x5B,
+    '4': 0x5C,
+    '5': 0x5D,
+    '6': 0x5E,
+    '7': 0x5F,
+    '8': 0x60,
+    '9': 0x61,
+  };
+
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: const Color(0xFF121722),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Expanded(child: _numberButton('1', keys['1']!)),
+              const SizedBox(width: 10),
+              Expanded(child: _numberButton('2', keys['2']!)),
+              const SizedBox(width: 10),
+              Expanded(child: _numberButton('3', keys['3']!)),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              Expanded(child: _numberButton('4', keys['4']!)),
+              const SizedBox(width: 10),
+              Expanded(child: _numberButton('5', keys['5']!)),
+              const SizedBox(width: 10),
+              Expanded(child: _numberButton('6', keys['6']!)),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              Expanded(child: _numberButton('7', keys['7']!)),
+              const SizedBox(width: 10),
+              Expanded(child: _numberButton('8', keys['8']!)),
+              const SizedBox(width: 10),
+              Expanded(child: _numberButton('9', keys['9']!)),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              const Spacer(),
+              Expanded(child: _numberButton('0', keys['0']!)),
+              const Spacer(),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _numberButton(String number, int keyCode) {
+    return InkWell(
+      borderRadius: BorderRadius.circular(16),
+      onTap: () => _sendCommand(
+        number,
+        () => _playerClient.sendKeyboard(keyCode),
+      ),
+      child: Container(
+        height: 58,
+        decoration: BoxDecoration(
+          color: const Color(0xFF181F2D),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: const Color(0xFF27334A),
+          ),
+        ),
+        child: Center(
+          child: Text(
+            number,
+            style: const TextStyle(
+              fontSize: 21,
+              fontWeight: FontWeight.w700,
+              color: Color(0xFFDDE5FF),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   Widget _buildVolumeControl() {

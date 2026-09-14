@@ -5,9 +5,9 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Freebox Remote</string>
+	<string>Télécommande Freebox</string>
 	<key>NSLocalNetworkUsageDescription</key>
-	<string>Freebox Remote recherche votre Freebox sur le réseau local.</string>
+	<string>Télécommande Freebox recherche votre Freebox sur le réseau local.</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsLocalNetworking</key>
