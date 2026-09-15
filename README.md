@@ -10,12 +10,5 @@ flutter run
 ```
 
 L'écran actuel propose la télécommande principale, la navigation entre les vues,
-le contrôle du volume et un indicateur de connexion. La prochaine étape sera de
-relier les commandes à l'API Freebox et d'ajouter l'appairage avec le Player.
-#   F r e e b o x R e m o t e 
- 
- #   F r e e b o x R e m o t e 
- 
- #   F r e e b o x R e m o t e 
- 
+le contrôle du volume et un indicateur de connexion.
  
